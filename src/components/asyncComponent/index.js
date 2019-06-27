@@ -3,7 +3,7 @@
  * name: index
  * date: 2019-05-11
  * author: cengfucheng
- * about: 异步导入组件
+ * about: 异步导入组件 react原生 方式
  *
  */
 

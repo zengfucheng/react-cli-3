@@ -85,6 +85,8 @@ import { observer, inject} from "mobx-react";
 
 // 148.70.42.97
 
+import LoadBottom from '@/components/loadBottom';
+import Errorsvg from '@/assets/404.svg';
 
 export default
 @inject('appStore')
@@ -92,14 +94,31 @@ export default
 @observer
 class HomePage extends Component{
 
-    // constructor(props) {
-    //     super(props)
-    // }
+    constructor(props) {
+        super(props)
+        this.HomeBox = React.createRef();
+    }
+
+    state = {
+        loading: false,
+        loader: null,
+        allowLoad: false,
+        list: ['a','b','c','b','e','f','h','j','k','m']
+    }
+
+    // static HomeBox = Symbol('homebox');
+    static HomeBox = Symbol('homebox');
 
     componentDidMount() {
+        console.log('svg文件样式',Errorsvg)
         // console.log(this.props,' stroe数据')
         // console.log('查看组件 ',this)
         // console.log('路由数据',this.props.match.params)
+        // window.addEventListener('scroll', this.onHomeScroll, false)
+    }
+
+    componentWillUnmount() {
+        // window.removeEventListener('scroll', this.onHomeScroll, false);
     }
 
     fetchData = async () => {
@@ -179,12 +198,52 @@ class HomePage extends Component{
         //     console.log('返回数据2, ', rsp)
         // })
 
-        console.log('点击');
+        console.log('点击.');
         this.$Api.fetch_login_user(JSON.stringify({name: 'zfccc',psw: '12345678'}))
             .then(data => {
                 console.log('返回数据' ,data)
             })
             .catch(err => console.log('错误',err));
+    }
+
+    onHomeScroll = (e) => {
+        console.log(e,'滑动')
+        // console.log(this.refs.HomeBox)
+        console.log(this.HomeBox)
+    }
+
+    onLoadChange = (e) => {
+        if(this.state.loading) return;
+        this.setState({
+            loading: true
+        })
+
+        let str = 'qwertyuiopasdfghjklzxcvbnm';
+        let step = 5;
+        let arr = [...this.state.list];
+        for(let i = 0; i < step; i++) {
+            arr.push(str[Math.floor(Math.random() * str.length)])
+        }
+        // this.setState({
+        //     list: [...arr]
+        // })
+        console.log('滚动加载', 123)
+        setTimeout(() => {
+            this.setState({
+                loading: false,
+                list: [...arr]
+            })
+            if(this.state.list.length > 15) {
+                this.setState({
+                    allowLoad: true
+                })
+            }
+        },5000)
+        console.log(this.state.list.length,1122)
+    }
+
+    onClickItem = (e, item, index) => {
+        console.log(e ,item, index)
     }
 
     render() {
@@ -193,34 +252,66 @@ class HomePage extends Component{
         let obj = {...props.userStore.user};
         let advertiseList = [...props.appStore.advertiseList];
         let appPath = props.appStore.appPath;
+
+        let list = this.state.list;
+
+        console.log('home属性',props)
         return (
-            <div className={`${style['home-box']}`}>
-                <div style={{width: '5rem'}}>
-                    {/*<Carousel autoplay className={`${style['adertise-box']} zfc`}>*/}
-                    {/*    { advertiseList && advertiseList.map( (item, index) => {*/}
-                    {/*        return (*/}
-                    {/*            <div key={index+'ad'}>*/}
-                    {/*                <img src={appPath+item}/>*/}
-                    {/*            </div>*/}
-                    {/*        )*/}
-                    {/*    })}*/}
-                    {/*</Carousel>*/}
+            <div className={`${style['home-box']}`} ref={this.HomeBox}>
+                <div className={style.homeHead }>
+                    <div className={style.homeHeadLeft}>
+                        {/*<Carousel autoplay className={`${style['adertise-box']} zfc`}>*/}
+                        {/*    { advertiseList && advertiseList.map( (item, index) => {*/}
+                        {/*        return (*/}
+                        {/*            <div key={index+'ad'} >*/}
+                        {/*                <img src={appPath+item} style={{height: '20%'}}/>*/}
+                        {/*            </div>*/}
+                        {/*        )*/}
+                        {/*    })}*/}
+                        {/*</Carousel>*/}
+                    </div>
+
+                    <div className={style.homeHeadRight}>
+                        {/*<h3>热门动态</h3>*/}
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                        </ul>
+                    </div>
                 </div>
 
                 home page
-                {this.props.userStore.user.userNo}
+                {props.userStore.user.userNo}
                 <div onClick={this.fetchData}>
                     456
                 </div>
                 <br/>
                 <br/>
                 <br/>
-                <DateView date={123}/>
+                <DateView/>
                 <br/>
                 <br/>
                 <br/>
                 <br/>
                 <br/>
+                <LoadBottom dataList={[1,2]} onLoadTop={this.onLoadChange}
+                            onChange={this.onLoadChange} loading={this.state.loading} allowLoad={this.state.allowLoad}>
+                    <div>
+                        <ul>
+                            {
+                                list && list.map( (item, index) => {
+                                    return (
+                                        <li key={index + item} onClick={(e) => this.onClickItem(e, item, index)}>
+                                            {index}、{item}
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
+                </LoadBottom>
                 <Switch>
                     <Route path={`${match.path}/log`} component={MobxLoadCompoent( () => import('@/containers/log'))} date={456}/>
                 </Switch>

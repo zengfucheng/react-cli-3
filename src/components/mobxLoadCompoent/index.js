@@ -3,7 +3,7 @@
  * name: index
  * date: 2019-05-11
  * author: cengfucheng
- * about: 异步加载组件 mobx
+ * about: 异步加载组件 mobx 方式
  *
  */
 

@@ -9,8 +9,9 @@
 
 import React from 'react';
 
-export default function({date}) {
+export default function({date = 123}) {
     return (
+
         <div>
             <span>时间</span>
             <span>{date}</span>

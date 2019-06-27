@@ -9,7 +9,6 @@
 
 import { observable, action} from "mobx";
 
-
 class UserStore {
     @observable isSign = false;     //状态登陆判断
     @observable user = {            //用户信息

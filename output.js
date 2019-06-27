@@ -450,6 +450,32 @@
                 "resourceRegExp": {},
                 "contextRegExp": {}
             }
+        },
+        {
+            "patterns": [
+                {
+                    "from": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/static",
+                    "to": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/build/static",
+                    "type": "dir",
+                    "ignore": [
+                        ".DS_Store"
+                    ]
+                }
+            ],
+            "options": {}
+        },
+        {
+            "options": {
+                "test": {},
+                "cache": false,
+                "compressionOptions": {
+                    "level": 9
+                },
+                "filename": "[path].gz[query]",
+                "threshold": 10240,
+                "minRatio": 0.8,
+                "deleteOriginalAssets": false
+            }
         }
     ],
     "node": {

@@ -57,29 +57,39 @@ class App extends Component{
         let menuIndex = menuItem.key + '|' + menuItem.text;
         return (
             <div className="App">
-                <Layout>
-                    <Header style={{background: 'white',height:'0.64rem',}}>
-                        <div style={{width: '1.2rem', height:'0.64rem',float: 'left'}}>
-                            {/*<img src={zfc}/>*/}
+                <Layout className='app-warp'>
+                    <div className={'app-top-box'}>
+                        <Header className={'app-warp-header'} style={{background: 'white',height:'54px',}}>
+                            {/*<div className={'warp-header-box'}>*/}
+                            <div className={'app-logo-box'}>
+                                {/*<img src={zfc}/>*/}
+                                <img src={require('@/assets/logo.png')}/>
+
+                            </div>
+                            <Menu style={{width: 'calc(100% - 120px)',lineHeight: '54px'}} onClick={this.onMenuClick} mode="horizontal" defaultSelectedKeys={[menuIndex]}>
+                                {
+                                    Array.from(props.userStore.menuList).map( (item, index) => {
+                                        return ( <Menu.Item key={item.key + '|' + item.text}>
+                                            <NavLink to={item.path}>
+                                                <Icon type={item.icon} />
+                                                <span>{item.text}</span>
+                                            </NavLink>
+                                        </Menu.Item> )
+
+                                    })
+                                }
+                            </Menu>
+                            {/*</div>*/}
+                        </Header>
+                    </div>
+
+
+                    {/*<Content className={'app-warp-content'} style={{padding: '5px',background: '#FFFFFFF',height:'calc(100% -54px)', overflowY:'auto'}}>*/}
+                    <Content className={'app-warp-content'} style={{padding: '5px',background: '#FFFFFFF'}}>
+                        <div className={'app-content-area'}>
+                            {props.children}
 
                         </div>
-                        <Menu style={{width: 'calc(100% - 1.4rem)',lineHeight: '0.64rem'}} onClick={this.onMenuClick} mode="horizontal" defaultSelectedKeys={[menuIndex]}>
-                            {
-                                Array.from(props.userStore.menuList).map( (item, index) => {
-                                    return ( <Menu.Item key={item.key + '|' + item.text}>
-                                        <NavLink to={item.path}>
-                                            <Icon type={item.icon} />
-                                            <span>{item.text}</span>
-                                        </NavLink>
-                                    </Menu.Item> )
-
-                                })
-                            }
-                        </Menu>
-                    </Header>
-                    <Content style={{padding: '0.05px',background: '#FFFFFFF',height:'calc(100% -0.64rem)', overflowY:'auto'}}>
-
-                        {props.children}
                     </Content>
                 </Layout>
             </div>

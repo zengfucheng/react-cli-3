@@ -13,8 +13,9 @@ const fs = require('fs');
 
 const { override, fixBabelImports, addLessLoader, addWebpackAlias, addBabelPlugins, useBabelRc, addDecoratorsLegacy, disableEsLint} = require("customize-cra");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');     //gzip压缩
 
-function resolve(dir,...more) {
+const resolve = (dir,...more) => {
 
     // ...Array.from(arguments)     // arguments方式
     let type = Object.prototype.toString.call(dir);
@@ -50,14 +51,23 @@ const addMyName = () => (config) => {
                     '.DS_Store'
                 ]
             }
-        ])
+        ]),
+        new CompressionWebpackPlugin({
+            // asset: '[path].gz[query]',// 目标文件名
+            algorithm: 'gzip',// 使用gzip压缩
+            test: new RegExp(
+                '\\.(js|css)$' // 压缩 js 与 css
+            ),
+            threshold: 10240,// 资源文件大于10240B=10kB时会被压缩
+            minRatio: 0.8 // 最小压缩比达到0.8时才会被压缩
+        })
     ]
+
+    config.plugins = [...config.plugins,...plugins];
 
     // 输出配置到根目录 src下，供查看
     let writeFile = fs.createWriteStream('output.js');
     writeFile.write(JSON.stringify(config, null, 4),'utf8');
-
-    config.plugins = [...config.plugins,...plugins];
 
     return config;
 }

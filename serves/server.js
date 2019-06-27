@@ -18,6 +18,7 @@ const KoaViews = require('koa-views');
 const KoaStatic = require('koa-static');
 const KoaCors = require('koa2-cors');
 const BodyParser = require('koa-bodyparser');
+const KoaCompress = require('koa-compress');        // gzip压缩
 
 // const ws = require('nodejs-websocket');
 
@@ -29,11 +30,15 @@ const app = new Koa();
 const whiteList = [
     'http://localhost:3000',
     'http://localhost:3001',
+    'http://127.0.0.1:8020',
     'http://localhost:3002',
     'http://localhost:8080',
     'http://localhost:8081',
 ];
 
+
+const compressOption = {threshold: 2048};
+// app.use(KoaCompress(compressOption));
 
 app.use(KoaCors({
     // 通过中间件提供的方法，遍历白名单的函数，然后是否允许跨域访问
@@ -86,12 +91,17 @@ app.use(router.allowedMethods());
 // }).listen(3003);
 
 
-
 http.createServer(app.callback(
     console.log('http Server running at http://127.0.0.1:3000/')
 )).listen(3000);
 https.createServer(app.callback(
     console.log('https Server running at https://127.0.0.1:3001/')
 )).listen(3001);
-
-
+// var options = {
+//     key: fs.readFileSync('./ssl/default.key'),
+//     cert: fs.readFileSync('./ssl/default.cer')
+// };
+//
+// var server = https.createServer(options, function (request, response) {
+//     // ...
+// });

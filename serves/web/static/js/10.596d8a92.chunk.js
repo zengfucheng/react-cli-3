@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{483:function(t,n,o){"use strict";o.r(n);var e="http://148.70.42.97:80",r=o(125);function a(t){return r.a.post("".concat(e,"/home"),{data:t})}function c(t){return r.a.post("".concat(e,"/setting/advertise"),{data:t})}o.d(n,"login_user",function(){return a}),o.d(n,"advertise",function(){return c})}}]);
+//# sourceMappingURL=10.596d8a92.chunk.js.map

@@ -24,6 +24,8 @@ const history = createHashHistory();
 @observer
 class InjectStore extends Component{
     // 封装一下路由组件，将 store 传入到单个组件，
+
+    // 不再采用。。。不然，每加一个store，就特麻烦。需要store的时候，自己引入
     constructor(props) {
         super(props)
     }
@@ -36,7 +38,8 @@ class InjectStore extends Component{
 // 改版，所有路由变成组件
 //
 const routeComponents = routers => routers.map( (route, index) => {
-    return <InjectStore key={index + 'route'} {...route}/>
+    // return <InjectStore key={index + 'route'} {...route}/>
+    return <PrivateRouter key={index + 'route'} {...route}/>
 });
 
 

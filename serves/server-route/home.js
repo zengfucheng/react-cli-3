@@ -9,6 +9,8 @@
 const path = require('path');
 const router = require('koa-router')();
 
+const zip = require('zlib');
+
 // const rg = require('superagent');
 
 // const request = require('request');
@@ -39,11 +41,13 @@ router.get('home', (ctx, next) => {
 });
 
 router.post('home', async (ctx, next) => {
-    console.log(ctx.request.body)
+    // console.log(ctx.request.body);
+    // console.log(ctx.request.headers);
     ctx.response.status = 203;
     ctx.response.status = 200;
     ctx.response.type = 'html';
-    ctx.response.body = fs.createReadStream(path.resolve('./web/index.html'))
+    ctx.response.body = JSON.stringify({names: 'a'})
+    // ctx.response.body = fs.createReadStream(path.resolve(__dirname,'./web/index.html'))
     // await axios.post('http://148.70.42.97:80/login',{
     //     ...ctx.request.body
     // })

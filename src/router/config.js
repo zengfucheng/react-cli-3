@@ -31,6 +31,7 @@ export const layoutComponent = [
     {
         path: '/about',
         name: 'about',
+        login: true,
         exact: true,
         component: importCompoent('about')
     },

@@ -43,6 +43,7 @@ Axios.interceptors.request.use(
         config.headers = {
             ...config.headers,
             // 'Content-Type': 'application/x-www-form-urlencoded',
+            // 'Accept-Encoding': 'gzip,deflate',
             'Content-Type': 'application/json'
         }
         return config;
