@@ -1,27 +1,19 @@
 import React, { createReactContext } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, HashRouter, Switch } from 'react-router-dom';
-// import { render } from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 // import { Provider } from 'react-redux';
 import { Provider } from 'mobx-react';
 
-import store from './store';
-import Routers from './router';
-import axios from './constants/api/AxiosServer';
-import Api from './constants/restful';
-
-import { Route, Redirect } from 'react-router-dom';
-
-
-import MobxLoadCompoent from '@/components/mobxLoadCompoent';
+import store from '@/store';
+import Routers from '@/router';
+import axios from '@/constants/api/AxiosServer';
+// import Api from '@/constants/restful';           // 不再使用集成api
 
 
 React.Component.prototype.$Axios = axios;
-React.Component.prototype.$Api = Api;
+// React.Component.prototype.$Api = Api;
 
 // redux 方式
 // <Provider store={store}>

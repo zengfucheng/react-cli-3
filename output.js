@@ -99,7 +99,8 @@
         ],
         "alias": {
             "react-native": "react-native-web",
-            "@": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/src"
+            "@": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/src",
+            "Restful": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/src/constants/restful"
         },
         "plugins": [
             {
@@ -144,7 +145,7 @@
                     {
                         "test": {},
                         "include": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/src",
-                        "loader": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/node_modules/react-scripts/node_modules/babel-loader/lib/index.js",
+                        "loader": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/node_modules/babel-loader/lib/index.js",
                         "options": {
                             "customize": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/node_modules/babel-preset-react-app/webpack-overrides.js",
                             "babelrc": false,
@@ -152,10 +153,10 @@
                             "presets": [
                                 "/Users/cengfucheng/WebstormProjects/react/react-cli-3/node_modules/babel-preset-react-app/index.js"
                             ],
-                            "cacheIdentifier": "development:babel-plugin-named-asset-import@:babel-preset-react-app@8.0.0:react-dev-utils@9.0.0:react-scripts@3.0.0",
+                            "cacheIdentifier": "development:babel-plugin-named-asset-import@0.3.3:babel-preset-react-app@8.0.0:react-dev-utils@9.0.3:react-scripts@3.0.0",
                             "plugins": [
                                 [
-                                    "/Users/cengfucheng/WebstormProjects/react/react-cli-3/node_modules/react-scripts/node_modules/babel-plugin-named-asset-import/index.js",
+                                    "/Users/cengfucheng/WebstormProjects/react/react-cli-3/node_modules/babel-plugin-named-asset-import/index.js",
                                     {
                                         "loaderMap": {
                                             "svg": {
@@ -188,7 +189,7 @@
                     {
                         "test": {},
                         "exclude": {},
-                        "loader": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/node_modules/react-scripts/node_modules/babel-loader/lib/index.js",
+                        "loader": "/Users/cengfucheng/WebstormProjects/react/react-cli-3/node_modules/babel-loader/lib/index.js",
                         "options": {
                             "babelrc": false,
                             "configFile": false,
@@ -203,7 +204,7 @@
                             ],
                             "cacheDirectory": true,
                             "cacheCompression": false,
-                            "cacheIdentifier": "development:babel-plugin-named-asset-import@:babel-preset-react-app@8.0.0:react-dev-utils@9.0.0:react-scripts@3.0.0",
+                            "cacheIdentifier": "development:babel-plugin-named-asset-import@0.3.3:babel-preset-react-app@8.0.0:react-dev-utils@9.0.3:react-scripts@3.0.0",
                             "sourceMaps": false
                         }
                     },

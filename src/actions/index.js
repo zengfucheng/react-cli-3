@@ -8,7 +8,7 @@
  */
 import * as LoginAction from './LoginAction';
 
-// 导出 action 集合
+// 导出 action
 export default {
     ...LoginAction,
 }

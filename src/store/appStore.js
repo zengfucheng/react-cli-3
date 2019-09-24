@@ -8,10 +8,10 @@
  */
 
 import { observable, action, computed } from 'mobx';
-import { observer } from "mobx-react";
+// import { observer } from "mobx-react";
 class AppStore {
     appPath = 'http://127.0.0.1:3000';  // app服务地址
-    @observable names = 'z';
+    @observable names = '';
     @observable advertiseList = [];         // 广告菜单
 }
 

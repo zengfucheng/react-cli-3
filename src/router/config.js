@@ -12,7 +12,8 @@ import React from 'react';
 // import AsyncComponent from '@/components/asyncComponent';
 import MobxLoadCompoent from '@/components/mobxLoadCompoent';
 // const importCompoent = filesPath => AsyncComponent(() => import(`${viewPath}${filesPath}`));
-const importCompoent = filesPath => MobxLoadCompoent(() => import(`@/containers/${filesPath}`));
+// const importCompoent = filesPath => MobxLoadCompoent(() => import(`@/containers/${filesPath}`));
+const importCompoent = filesPath => MobxLoadCompoent(() => import('@/containers/'+filesPath));
 
 export const layoutComponent = [
 
@@ -31,12 +32,12 @@ export const layoutComponent = [
     {
         path: '/about',
         name: 'about',
-        login: true,
+        login: true,            // 是否需要登录
         exact: true,
         component: importCompoent('about')
     },
     {
-        path: '/editGoods',
+        path: '/editGoods/:id',
         name: 'editGoods',
         exact: true,
         component: importCompoent('editGoods')
@@ -56,6 +57,12 @@ export const noLayoutComponent = [
         name: 'login',
         exact: true,
         component: importCompoent('login')
+    },
+    {
+        path: '/register',
+        name: 'register',
+        exact: true,
+        component: importCompoent('register/register')
     },
     {
         path: '/404',

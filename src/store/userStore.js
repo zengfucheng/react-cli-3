@@ -16,30 +16,30 @@ class UserStore {
     };
     @observable menuIndex = 0;      //菜单显示编号
     @observable menuList = [        //登陆后的菜单列表
-        {
-            path: '/home',
-            icon: 'user',
-            key: 0,
-            text: 'nav 1'
-        },
-        {
-            path: '/about',
-            icon: 'user',
-            key: 1,
-            text: 'nav 2'
-        },
-        {
-            path: '/editGoods',
-            icon: 'user',
-            key: 2,
-            text: 'nav 3'
-        },
-        {
-            path: '/login',
-            icon: 'user',
-            key: 3,
-            text: 'nav 4'
-        }
+        // {
+        //     path: '/home',
+        //     icon: 'user',
+        //     key: 0,
+        //     text: 'nav 1'
+        // },
+        // {
+        //     path: '/about',
+        //     icon: 'user',
+        //     key: 1,
+        //     text: 'nav 2'
+        // },
+        // {
+        //     path: '/editGoods',
+        //     icon: 'user',
+        //     key: 2,
+        //     text: 'nav 3'
+        // },
+        // {
+        //     path: '/login',
+        //     icon: 'user',
+        //     key: 3,
+        //     text: 'nav 4'
+        // }
     ];
     @action onSignUp(item) {
         // this.user.userNo = item.userNo;

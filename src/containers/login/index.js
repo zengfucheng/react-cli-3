@@ -16,8 +16,9 @@ import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 
 import { Link } from "react-router-dom";
-import { Form, Icon, Input, Button, Checkbox } from 'antd'
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
+import { login_user } from 'Restful/login/login-api';
 
 import { inject, observer} from "mobx-react";
 
@@ -34,6 +35,10 @@ class LoginPage extends Component{
 
     }
 
+    state = {
+        errorData: {}
+    }
+
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         // console.log(nextProps,123321);
         // let { history, location } = nextProps;
@@ -46,69 +51,100 @@ class LoginPage extends Component{
 
     onLoginSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
+        const { validateFields, setFields } = this.props.form;
+            validateFields(async (err, values) => {
+                if (err) {
+                    console.log('form: ', err);
+                    return ;
+                }
                 console.log('form: ', values);
-                this.$Api.fetch_login_user(values)
-                    .then(data => {
-                        console.log('返回数据' ,data);
-                        this.props.userStore.onSignUp(data);
-                        this.props.userStore.isSign = true;     // 状态登陆判断
-                        Cookies.set('logins','zfc');
-                        this.props.userStore.menuIndex = 0;
-                        this.props.history.push('/');
-                    })
-                    .catch(err => console.log('错误',err));
-                // fetch('http://127.0.0.1:3000/setting/advertise',{
-                //     method: 'POST',
-                //     body: JSON.stringify(values),
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                //     credentials: 'include'
-                // })
-                //     .then(res => {
-                //         return res.json();
-                //     })
-                //     .then(data => {
-                //         data = JSON.parse(JSON.stringify(data).replace(/\|/g,'/'));
-                //         console.log(data);
-                //         this.props.appStore.advertiseList = [...data.url];
-                //     })
-                //     .catch(err => console.log(err));
-                // fetch('http://127.0.0.1:3000/login',{
-                //     method: 'POST',
-                //     body: JSON.stringify(values),
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                // })
-                //     .then( res => {
-                //         return res.json();
-                //     })
-                //     .then( data => {
-                //         console.log(data,123);
-                //         this.props.userStore.onSignUp(data);
-                //         this.props.userStore.isSign = true;     // 状态登陆判断
-                //         Cookies.set('logins','zfc');
-                //         this.props.history.push('/');
-                //     })
-                //     .catch( err => {
-                //         console.log(err)
-                //     })
-                // console.log(this.props,111);
-            }
-        });
+                try { const loginData = await login_user(JSON.stringify(values));
+                    console.log('返回数据' ,loginData);
+                    console.log('查看表单' ,this.props.form);
+                    if(loginData.errorcode != 'SC0000') {
+                        console.log(loginData.msg);
+                        this.setState({
+                            errorData: loginData
+                        });
+                        setFields({
+                            [loginData.result]: {
+                                // value: values.username,
+                                value: values[loginData.result],
+                                errors: [new Error(loginData.msg)],
+                            }
+                        })
+                        // this.pswRule(data,data);
+                        return;
+                    }
+                    this.setState({
+                        errorData: {}
+                    });
+                    this.props.userStore.onSignUp(loginData);
+                    this.props.userStore.isSign = true;     // 状态登陆判断
+                    Cookies.set('logins','zfc');
+                    this.props.userStore.menuIndex = 0;
+                    this.props.history.push('/');
+                    // fetch('http://127.0.0.1:3000/setting/advertise',{
+                    //     method: 'POST',
+                    //     body: JSON.stringify(values),
+                    //     headers: {
+                    //         'Content-Type': 'application/json'
+                    //     },
+                    //     credentials: 'include'
+                    // })
+                    //     .then(res => {
+                    //         return res.json();
+                    //     })
+                    //     .then(data => {
+                    //         data = JSON.parse(JSON.stringify(data).replace(/\|/g,'/'));
+                    //         console.log(data);
+                    //         this.props.appStore.advertiseList = [...data.url];
+                    //     })
+                    //     .catch(err => console.log(err));
+                    // fetch('http://127.0.0.1:3000/login',{
+                    //     method: 'POST',
+                    //     body: JSON.stringify(values),
+                    //     headers: {
+                    //         'Content-Type': 'application/json'
+                    //     },
+                    // })
+                    //     .then( res => {
+                    //         return res.json();
+                    //     })
+                    //     .then( data => {
+                    //         console.log(data,123);
+                    //         this.props.userStore.onSignUp(data);
+                    //         this.props.userStore.isSign = true;     // 状态登陆判断
+                    //         Cookies.set('logins','zfc');
+                    //         this.props.history.push('/');
+                    //     })
+                    //     .catch( err => {
+                    //         console.log(err)
+                    //     })
+                    // console.log(this.props,111);
+                }catch (e) {
+                    console.log('错误',e)
+                }
+            });
+
+    }
+
+    pswRule = (rule, value, callback) => {
+        if(!value) {
+            return callback();
+        }
+        if(this.state.errorData) {
+            return callback(this.state.errorData.msg);
+        }
+        console.log(this);
+        callback();
     }
 
     render() {
-
         let bgColor = {
             color: 'red',
-        }
-
+        };
         const { getFieldDecorator } = this.props.form;
-        // console.log(style['login-form'],11223311)
         return (
             <div style={bgColor} className={`${style.login} ${style.zfc}`}>
                 <div className={`${style['login-content']}`}>
@@ -132,6 +168,9 @@ class LoginPage extends Component{
                                     {
                                         required: true,
                                         message: '请输入您的密码'
+                                    },
+                                    {
+                                        validator: this.pswRule
                                     }
                                 ]
                             })(

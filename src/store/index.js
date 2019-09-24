@@ -22,6 +22,7 @@ const store = {
     appStore,
     userStore
 }
+export default store;
 // const store = {
 //     appStore: {
 //         get() {
@@ -35,15 +36,15 @@ const store = {
 //         console.log(modules,'加载库')
 //     })
 // app()
-export default store;
 // import appStore from './appStore';
 // import userStore from './userStore';
 //
 
+// import appStore1 from './appStore';
 // function load(url) {
-//     console.log('模块路径',url)
 //     return new Promise( (resolve => {
-//         (() => import(url))()
+//         console.log('模块路径',url)
+//         import(`${url}`)
 //             .then( ({default: modules}) => {
 //                 resolve(modules);
 //                 // console.log('数据查看： ',modules)
@@ -58,16 +59,37 @@ export default store;
 //     console.log('数据查看： ',data)
 //     return data;
 // }
-// // Promise.resolve((() => import('./appStore.js'))()).then( ({default: modules}) => {
-// //     console.log('数据库查看z',modules);
-// //     return modules;
-// // })
-// // console.log('数据查看h',(() => import('./appStore.js'))())
-//     // console.log('数据库查看',Promise.resolve(() => import('./appStore.js')).then( ({default: modules}) => modules))
-// const store = {
-//     appStore: abs('./appStore'),
-//     // userStore: import(() => './userStore.js'),
-//     userStore: abs('./userStore'),
+// async function abs(url) {
+//     let data = await load(url);
+//     return data;
 // }
-// // console.log(store.appStore,123456123)
+
+
+// Promise.resolve((() => import('./appStore.js'))()).then( ({default: modules}) => {
+//     console.log('数据库查看z',modules);
+//     return modules;
+// })
+// console.log('数据查看h',(() => import('./appStore.js'))())
+    // console.log('数据库查看',Promise.resolve(() => import('./appStore.js')).then( ({default: modules}) => modules))
+// let _appStore = abs('./appStore');
+// let _userStore = abs('./userStore');
+// setTimeout( () => {
+//     console.log((() => import('./appStore.js'))())
+//     console.log('二次查看',_appStore.then( data => data),_userStore.then( data => data))
+// },1000)
+// const store = {
+    // appStore: _appStore,
+    // appStore: import('./appStore.js'),
+    // appStore: import(`${app}`).then( ({default: modules}) => {
+    //     console.log('查看模块',modules)
+    //     return modules;
+    // }),
+    // userStore: import('./userStore.js').then( ({default: modules}) => {
+    //     console.log('查看模块',modules)
+    //     return modules;
+    // }),
+    // userStore: _userStore,
+    // userStore: import('./userStore.js'),
+// }
+// console.log(store.appStore,123456123)
 // export default store;

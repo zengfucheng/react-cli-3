@@ -12,19 +12,22 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import propTypes from 'prop-types';         // 属性类型监控
 
-import { Switch, Route, Link, Redirect } from 'react-router-dom';
-import { Carousel } from "antd";
+import { Switch, Route, Link, Redirect, Router } from 'react-router-dom';
+import {Carousel, List, Avatar, Icon, Layout} from "antd";
 
 // import ReactSvg from 'react-svg';
 
 import Actions from '@/actions';
 
 import DateView from '@/components/dateView';
+import Tabs from '@/components/tabs/Tabs';
+import { login_user } from 'Restful/login/login-api';
 
 import store from '@/store';
 
 import style from './index.module.less';
 import MobxLoadCompoent from '@/components/mobxLoadCompoent';
+import IconText from '@/components/iconText';
 
 
 // mobx 实现
@@ -103,7 +106,45 @@ class HomePage extends Component{
         loading: false,
         loader: null,
         allowLoad: false,
-        list: ['a','b','c','b','e','f','h','j','k','m']
+        // list: ['a','b','c','b','e','f','h','j','k','m']
+        list: [
+            {
+                title: 'next a',
+                avatar: 'images/avatars-man.png',
+                codeNo: 'a12',
+                content: '我的你的阿大',
+                description: '我的你的阿大我的你的阿大我的你的阿大',
+                collectionstatus: '0',          // 未收藏
+                thumbstatus: '0',               // 未点赞
+                collectionNm: '5',              // 收藏数
+                thumbUpNm: '2',                 // 点赞数
+                commentNm: '1',                 // 评论数
+            },
+            {
+                title: 'next b',
+                avatar: 'images/avatars-man.png',
+                codeNo: 'b07',
+                content: '我的你的阿大',
+                description: '我的你的阿大我的你的阿大我的你的阿大',
+                collectionstatus: '0',          // 未收藏
+                thumbstatus: '0',               // 未点赞
+                collectionNm: '15',              // 收藏数
+                thumbUpNm: '2',                 // 点赞数
+                commentNm: '1',                 // 评论数
+            },
+            {
+                title: 'next c',
+                avatar: 'images/avatars-man.png',
+                codeNo: 'c8234',
+                content: '我的你的阿大',
+                description: '我的你的阿大我的你的阿大我的你的阿大',
+                collectionstatus: '0',          // 未收藏
+                thumbstatus: '0',               // 未点赞
+                collectionNm: '95',              // 收藏数
+                thumbUpNm: '2',                 // 点赞数
+                commentNm: '1',                 // 评论数
+            }
+        ]
     }
 
     // static HomeBox = Symbol('homebox');
@@ -119,91 +160,23 @@ class HomePage extends Component{
 
     componentWillUnmount() {
         // window.removeEventListener('scroll', this.onHomeScroll, false);
+        const { props } = this;
+        const { history } = props;
+        console.log('离开了', history)
     }
 
+
     fetchData = async () => {
-        // axios.post('http://127.0.0.1:3000/home',
-        //     {
-        //         user: JSON.stringify({name: 'zfc', psw: 123456})
-        //     })
-        //     .then( data => {
-        //         console.log('返回数据', data)
-        //     })
-        // let data = await this.$axios('http://127.0.0.1:3000/home',{
-        //     method: 'POST', data: JSON.stringify({name: 'zfccc',psw: '12345678'}),
-        // })
-
-        // let data = await this.$axios('http://127.0.0.1:3000/home',{
-        // let data = await this.$axios('/home',{
-        //     method: 'POST',
-        //     data: JSON.stringify({name: 'zfccc',psw: '12345678'}),
-        //     headers: {
-        //         Zfc: 15
-        //     }
-        // });
-        // this.$axios('/home',{
-        //     method: 'POST',
-        //     data: JSON.stringify({name: 'zfccc',psw: '12345678'}),
-        //     headers: {
-        //         Zfc: 15
-        //     }
-        // })
-        //     .then(data => {
-        //         console.log('返回数据, ', data);
-        //         return data;
-        //     })
-        //     .then(data => {
-        //         console.log('二次请求', data);
-        //         let rsp = this.$axios('/home',{
-        //             method: 'POST',
-        //             data: JSON.stringify({name: 'zfccc',psw: '12345678'}),
-        //             headers: {
-        //                 Zfc: 15
-        //             }
-        //         });
-        //         return rsp;
-        //     })
-        //     .then(data => {
-        //         console.log('二次请求返回数据, ', data);
-        //         return data;
-        //     })
-        //     .catch(err => {
-        //         console.log('返回错误',err)
-        //     })
-
-
-        // Promise.all([this.$axios('/home',{
-        //     method: 'POST',
-        //     data: JSON.stringify({name: 'zfccc',psw: '12345678'}),
-        //     headers: {
-        //         Zfc: 15
-        //     }
-        // }),this.$axios('/home',{
-        //     method: 'POST',
-        //     data: JSON.stringify({name: 'zfccc',psw: '12345678'}),
-        //     headers: {
-        //         Zfc: 15
-        //     }
-        // })])
-        //     .then(data => {
-        //         console.log('数组返回',data)
-        //     })
-        //     .catch(err => {
-        //         console.log('返回错误',err.toJSON())
-        //     })
-            // .then(data => {
-            //     console.log('返回数据, ', data)
-            // })
-        // Promise.resolve(data).then(rsp => {
-        //     console.log('返回数据2, ', rsp)
-        // })
-
         console.log('点击.');
-        this.$Api.fetch_login_user(JSON.stringify({name: 'zfccc',psw: '12345678'}))
-            .then(data => {
-                console.log('返回数据' ,data)
-            })
-            .catch(err => console.log('错误',err));
+        // this.$Api.fetch_login_user(JSON.stringify({name: 'zfccc',psw: '12345678'}))
+        try {
+            const data = await login_user(JSON.stringify({username: 'zeng0613',password: '123456'}))
+            console.log('返回数据' ,data)
+            // this.props.appStore.names = data.result[0].user;
+        }catch(err) {
+            console.log('错误',err)
+        }
+
     }
 
     onHomeScroll = (e) => {
@@ -227,7 +200,7 @@ class HomePage extends Component{
         // this.setState({
         //     list: [...arr]
         // })
-        console.log('滚动加载', 123)
+        console.log('滚动加载', 123);
         setTimeout(() => {
             this.setState({
                 loading: false,
@@ -238,13 +211,57 @@ class HomePage extends Component{
                     allowLoad: true
                 })
             }
-        },5000)
+        },5000);
         console.log(this.state.list.length,1122)
     }
 
     onClickItem = (e, item, index) => {
-        console.log(e ,item, index)
+        const { history } = this.props;
+        console.log(e ,item, index);
+        history.push({pathname: `/editGoods/:${item}`});
     }
+
+
+    onCollection = (e, item, index) => {
+        // console.log(e, item, index);
+        let list = this.state.list;
+        let num = ~~item.collectionNm;
+        item.collectionNm = num + 1 + '';
+        if(item.collectionstatus == 0 ){
+            item.collectionstatus = 1;
+        } else {
+            item.collectionstatus = 0;
+        }
+        // this.state.list.splice(index,1,item);
+        // this.setState({
+        //     list: list
+        // }, () => {
+        //     console.log( this.state.list,123)
+        // })
+        console.log( this.state.list,123);
+        this.setState({
+            loading: false
+        })
+        // this.setState( state => {
+        //     list: state.list.map( (key, i) => {
+        //             if(i == index) {
+        //                 return {
+        //                     ...key,
+        //                     ...item
+        //                 }
+        //             }
+        //             return key;
+        //         });
+        // });
+
+    }
+    onThumb = (e, item, index) => {
+        console.log(e, item, index)
+    }
+    onComment = (e, item, index) => {
+        console.log(e, item, index,1)
+    }
+
 
     render() {
         let { props } = this;
@@ -253,9 +270,34 @@ class HomePage extends Component{
         let advertiseList = [...props.appStore.advertiseList];
         let appPath = props.appStore.appPath;
 
-        let list = this.state.list;
+        {/*全部信息，技术杂谈，奇闻逸事*/}
+        const Paglist = [
+            {
+                text: '全部信息'
+            },
+            {
+                text: '技术杂谈'
+            },
+            {
+                text: '奇闻逸事'
+            }
+        ]
+        const PagPagi = {
+            全部信息: {
 
-        console.log('home属性',props)
+            },
+            技术杂谈: {
+
+            },
+            奇闻逸事: {
+
+            }
+        }
+
+
+        console.log('查看菜单123', props.userStore.menuList)
+        let list = this.state.list;
+        // console.log('home属性',props)
         return (
             <div className={`${style['home-box']}`} ref={this.HomeBox}>
                 <div className={style.homeHead }>
@@ -284,38 +326,93 @@ class HomePage extends Component{
 
                 home page
                 {props.userStore.user.userNo}
-                <div onClick={this.fetchData}>
-                    456
+                <div className='adclick' onClick={this.fetchData}>
+                    {props.appStore.names ? props.appStore.names : '未登录'}
                 </div>
                 <br/>
                 <br/>
                 <br/>
                 <DateView/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <LoadBottom dataList={[1,2]} onLoadTop={this.onLoadChange}
-                            onChange={this.onLoadChange} loading={this.state.loading} allowLoad={this.state.allowLoad}>
-                    <div>
-                        <ul>
-                            {
-                                list && list.map( (item, index) => {
-                                    return (
-                                        <li key={index + item} onClick={(e) => this.onClickItem(e, item, index)}>
-                                            {index}、{item}
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
-                    </div>
-                </LoadBottom>
-                <Switch>
-                    <Route path={`${match.path}/log`} component={MobxLoadCompoent( () => import('@/containers/log'))} date={456}/>
-                </Switch>
+                {/*<LoadBottom dataList={[1,2]} onLoadTop={this.onLoadChange}*/}
+                {/*            onChange={this.onLoadChange} loading={this.state.loading} allowLoad={this.state.allowLoad}>*/}
+                {/*    <div>*/}
+                {/*        <ul>*/}
+                {/*            {*/}
+                {/*                // list && list.map( (item, index) => {*/}
+                {/*                //     return (*/}
+                {/*                //         <li key={index + item} onClick={(e) => this.onClickItem(e, item, index)}>*/}
+                {/*                //             {index}、{item}*/}
+                {/*                //         </li>*/}
+                {/*                //     )*/}
+                {/*                // })*/}
+                {/*                list && list.map( (item, index) => {*/}
+                {/*                    return (*/}
+                {/*                        <Link key={index + item} to={`/editGoods/:${item}`}>*/}
+                {/*                            <li>*/}
+                {/*                                {index}、{item}*/}
+                {/*                            </li>*/}
+                {/*                        </Link>*/}
+                {/*                    )*/}
+                {/*                })*/}
+                {/*            }*/}
+                {/*        </ul>*/}
+                {/*    </div>*/}
+                {/*</LoadBottom>*/}
+                {/*<List itemLayout='horizontal' dataSource={this.state.list}*/}
+                {/*    renderItem={item => (*/}
+                {/*        <Link to={`/editGoods/:${item.codeNo}`}>*/}
+                {/*            <List.Item>*/}
+                {/*                <List.Item.Meta*/}
+                {/*                    avatar={<Avatar src={item.avatar}/>}*/}
+                {/*                    title={item.title}*/}
+                {/*                    description='1234'*/}
+                {/*                />*/}
+                {/*            </List.Item>*/}
+                {/*        </Link>*/}
+                {/*    )}>*/}
 
+                {/*</List>*/}
+
+                <Tabs list={Paglist} ListData={PagPagi}/>
+
+                <List itemLayout="vertical"
+                      size="large"
+                      dataSource={this.state.list}
+                      footer={
+                          <p>
+                              未来由你创造
+                          </p>
+                      }
+                      renderItem={(item, index) => (
+                              <List.Item key={item.title}
+                                         extra={
+                                                 <Link to={`/editGoods/:${item.codeNo}`}>
+                                                     <img src='images/zfc.jpg' style={{width: 200}}/>
+                                                 </Link>
+                                         }
+                                    actions={[
+                                        <IconText type={item.collectionstatus ? 'star-o' : 'like-o'} text={item.collectionNm} key="list-vertical-star-o" onBtnClick= {(e) => {this.onCollection(e,item, index)}} />,
+                                        <IconText type="like-o" text={item.thumbUpNm} key="list-vertical-like-o" onBtnClick= {(e) => {this.onThumb(e,item, index)}} />,
+                                        <IconText type="message" text={item.commentNm} key="list-vertical-message" onBtnClick= {(e) => {this.onComment(e,item, index)}} />,
+                                    ]}>
+                                          <Link to={`/editGoods/:${item.codeNo}`}>
+                                              <List.Item.Meta
+                                                  avatar={<Avatar src={item.avatar}/>}
+                                                  title={item.title}
+                                                  description={item.description}
+                                              />
+                                            {item.content}
+                                          </Link>
+                              </List.Item>
+
+                      )}>
+
+                </List>
+
+
+                {/*<Switch>*/}
+                {/*    <Route path={`${match.path}/log`} component={MobxLoadCompoent( () => import('@/containers/log'))} date={456}/>*/}
+                {/*</Switch>*/}
             </div>
         )
     }

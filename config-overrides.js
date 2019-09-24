@@ -33,6 +33,7 @@ console.log(process.env.NODE_ENV,1111111111)
 
 let aliasList = {
     '@': resolve('src'),
+    'Restful': resolve('src','constants', 'restful')
 };
 
 // process.env.GENERATE_SOURCEMAP = "false";

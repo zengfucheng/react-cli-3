@@ -26,7 +26,7 @@ export default function PrivateRouter({component: Component, ...rest}){
             let oldProps = {...props};
             // props = Object.assign({},{...props},{...rest});
             props = {...props,...rest};
-            console.log('组件12',props,oldProps,store);
+            console.log('组件12',this,props,oldProps,store);
 
             if(props.login && !store.userStore.isSign) {
                 // //角色权限控制, 例如：根据组件配置的 login 字符，判断需要进行权限控制不
@@ -38,12 +38,22 @@ export default function PrivateRouter({component: Component, ...rest}){
                 // console.log('跳转',props);
                 return <Component {...props}/>
             }
-            if(store.userStore.isSign && logins && props.location.pathname != '/login'){
-                return <Component {...props}/>
-            }else {
-                return <Redirect to='/login'/>
 
-            }
+            // isSign: (...)
+            // menuIndex: (...)
+            // menuList
+            // const memulist = [...store.userStore.menuList];
+            // for(let [ken, value] of Object.entries(memulist)) {
+            //     console.log(value,123)
+            // }
+
+            // 登陆限制，和角色权限限制冲突
+            // if(store.userStore.isSign && logins && props.location.pathname != '/login'){
+                return <Component {...props}/>
+            // }else {
+            //     return <Redirect to='/login'/>
+            //
+            // }
         }} />
     )
 }

@@ -8,17 +8,21 @@
  */
 
 import React, { Component } from 'react';
+import errorSy from './index.module.less';
 
 export default class ErrorPage extends Component{
 
     render() {
-        let style = {
-            width: '100%',
-            height: '100%',
-        }
+        // let style = {
+        //     width: '100%',
+        //     height: '100%',
+        // }
         return (
-            <div style={style}>
-                404
+            <div className={errorSy['error-page']}>
+                <div className={errorSy['error-content']}>
+                    <h1>404</h1>
+                    <p>页面丢失了，请稍后再试</p>
+                </div>
             </div>
         )
     }

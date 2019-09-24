@@ -55,12 +55,10 @@ Axios.interceptors.request.use(
 );
 Axios.interceptors.response.use(
     config => {
-        // console.log(config);
-        return Promise.resolve(config.data);
-        // let data = Promise.resolve(config);
+        let data = Promise.resolve(config);
         // console.log('请求结果：',Promise.resolve(config), '类型 ', typeof data);
         // return Promise.resolve(config);
-        // return Promise.resolve(data);
+        return Promise.resolve(config.data);
     },
     error => {
         console.log('请求结果错误：', error.toJSON());

@@ -53,6 +53,7 @@ class LoadBottom extends Component{
     }
 
     componentWillUnmount() {
+        console.log(111111111111)
         window.removeEventListener('scroll', this.onScrollEv, false)
     }
 
@@ -82,7 +83,6 @@ class LoadBottom extends Component{
         }
 
     }
-
 
     render() {
         let props = this.props;
